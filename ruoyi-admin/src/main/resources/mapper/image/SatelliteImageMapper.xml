@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.image.mapper.SatelliteImageMapper">
+    
+    <resultMap type="SatelliteImage" id="SatelliteImageResult">
+        <result property="id"    column="id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="satellite"    column="satellite"    />
+        <result property="sensor"    column="sensor"    />
+        <result property="productLevel"    column="product_level"    />
+        <result property="productType"    column="product_type"    />
+        <result property="imagingTime"    column="imaging_time"    />
+        <result property="produceTime"    column="produce_time"    />
+        <result property="bands"    column="bands"    />
+        <result property="wavelengthNm"    column="wavelength_nm"    />
+        <result property="fwhmNm"    column="fwhm_nm"    />
+        <result property="gsdMeter"    column="gsd_meter"    />
+        <result property="dataBits"    column="data_bits"    />
+        <result property="widthPixels"    column="width_pixels"    />
+        <result property="heightPixels"    column="height_pixels"    />
+        <result property="cloudPercent"    column="cloud_percent"    />
+        <result property="centerLat"    column="center_lat"    />
+        <result property="centerLon"    column="center_lon"    />
+        <result property="ulLat"    column="ul_lat"    />
+        <result property="ulLon"    column="ul_lon"    />
+        <result property="urLat"    column="ur_lat"    />
+        <result property="urLon"    column="ur_lon"    />
+        <result property="lrLat"    column="lr_lat"    />
+        <result property="lrLon"    column="lr_lon"    />
+        <result property="llLat"    column="ll_lat"    />
+        <result property="llLon"    column="ll_lon"    />
+        <result property="solarAzimuth"    column="solar_azimuth"    />
+        <result property="solarElevation"    column="solar_elevation"    />
+        <result property="satelliteAzimuth"    column="satellite_azimuth"    />
+        <result property="satelliteElevation"    column="satellite_elevation"    />
+        <result property="roll"    column="roll"    />
+        <result property="pitch"    column="pitch"    />
+        <result property="yaw"    column="yaw"    />
+        <result property="thumbUrl" column="thumb_url"/>
+    </resultMap>
+
+    <sql id="selectSatelliteImageVo">
+        select id, task_id, product_id, satellite, sensor, product_level, product_type, imaging_time, produce_time, bands, wavelength_nm, fwhm_nm, gsd_meter, data_bits, width_pixels, height_pixels, cloud_percent, center_lat, center_lon, ul_lat, ul_lon, ur_lat, ur_lon, lr_lat, lr_lon, ll_lat, ll_lon, solar_azimuth, solar_elevation, satellite_azimuth, satellite_elevation, roll, pitch, yaw, thumb_url from satellite_image
+    </sql>
+
+    <select id="selectSatelliteImageList" parameterType="SatelliteImage" resultMap="SatelliteImageResult">
+        <include refid="selectSatelliteImageVo"/>
+        <where>  
+            <if test="taskId != null  and taskId != ''"> and task_id like concat('%', #{taskId}, '%')</if>
+            <if test="productId != null  and productId != ''"> and product_id like concat('%', #{productId}, '%')</if>
+            <if test="satellite != null  and satellite != ''"> and satellite like concat('%', #{satellite}, '%')</if>
+            <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
+        </where>
+    </select>
+
+    <select id="selectSatelliteImageByProductId" parameterType="String" resultMap="SatelliteImageResult">
+        <include refid="selectSatelliteImageVo"/>
+        where product_id = #{productId}
+    </select>
+
+    <select id="selectSatelliteImageById" parameterType="Long" resultMap="SatelliteImageResult">
+        <include refid="selectSatelliteImageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSatelliteImage" parameterType="SatelliteImage" useGeneratedKeys="true" keyProperty="id">
+        insert into satellite_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">task_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="satellite != null">satellite,</if>
+            <if test="sensor != null">sensor,</if>
+            <if test="productLevel != null">product_level,</if>
+            <if test="productType != null">product_type,</if>
+            <if test="imagingTime != null">imaging_time,</if>
+            <if test="produceTime != null">produce_time,</if>
+            <if test="bands != null">bands,</if>
+            <if test="wavelengthNm != null">wavelength_nm,</if>
+            <if test="fwhmNm != null">fwhm_nm,</if>
+            <if test="gsdMeter != null">gsd_meter,</if>
+            <if test="dataBits != null">data_bits,</if>
+            <if test="widthPixels != null">width_pixels,</if>
+            <if test="heightPixels != null">height_pixels,</if>
+            <if test="cloudPercent != null">cloud_percent,</if>
+            <if test="centerLat != null">center_lat,</if>
+            <if test="centerLon != null">center_lon,</if>
+            <if test="ulLat != null">ul_lat,</if>
+            <if test="ulLon != null">ul_lon,</if>
+            <if test="urLat != null">ur_lat,</if>
+            <if test="urLon != null">ur_lon,</if>
+            <if test="lrLat != null">lr_lat,</if>
+            <if test="lrLon != null">lr_lon,</if>
+            <if test="llLat != null">ll_lat,</if>
+            <if test="llLon != null">ll_lon,</if>
+            <if test="solarAzimuth != null">solar_azimuth,</if>
+            <if test="solarElevation != null">solar_elevation,</if>
+            <if test="satelliteAzimuth != null">satellite_azimuth,</if>
+            <if test="satelliteElevation != null">satellite_elevation,</if>
+            <if test="roll != null">roll,</if>
+            <if test="pitch != null">pitch,</if>
+            <if test="yaw != null">yaw,</if>
+            <if test="thumbUrl != null">thumb_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">#{taskId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="satellite != null">#{satellite},</if>
+            <if test="sensor != null">#{sensor},</if>
+            <if test="productLevel != null">#{productLevel},</if>
+            <if test="productType != null">#{productType},</if>
+            <if test="imagingTime != null">#{imagingTime},</if>
+            <if test="produceTime != null">#{produceTime},</if>
+            <if test="bands != null">#{bands},</if>
+            <if test="wavelengthNm != null">#{wavelengthNm},</if>
+            <if test="fwhmNm != null">#{fwhmNm},</if>
+            <if test="gsdMeter != null">#{gsdMeter},</if>
+            <if test="dataBits != null">#{dataBits},</if>
+            <if test="widthPixels != null">#{widthPixels},</if>
+            <if test="heightPixels != null">#{heightPixels},</if>
+            <if test="cloudPercent != null">#{cloudPercent},</if>
+            <if test="centerLat != null">#{centerLat},</if>
+            <if test="centerLon != null">#{centerLon},</if>
+            <if test="ulLat != null">#{ulLat},</if>
+            <if test="ulLon != null">#{ulLon},</if>
+            <if test="urLat != null">#{urLat},</if>
+            <if test="urLon != null">#{urLon},</if>
+            <if test="lrLat != null">#{lrLat},</if>
+            <if test="lrLon != null">#{lrLon},</if>
+            <if test="llLat != null">#{llLat},</if>
+            <if test="llLon != null">#{llLon},</if>
+            <if test="solarAzimuth != null">#{solarAzimuth},</if>
+            <if test="solarElevation != null">#{solarElevation},</if>
+            <if test="satelliteAzimuth != null">#{satelliteAzimuth},</if>
+            <if test="satelliteElevation != null">#{satelliteElevation},</if>
+            <if test="roll != null">#{roll},</if>
+            <if test="pitch != null">#{pitch},</if>
+            <if test="yaw != null">#{yaw},</if>
+            <if test="thumbUrl != null">#{thumbUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSatelliteImage" parameterType="SatelliteImage">
+        update satellite_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="satellite != null">satellite = #{satellite},</if>
+            <if test="sensor != null">sensor = #{sensor},</if>
+            <if test="productLevel != null">product_level = #{productLevel},</if>
+            <if test="productType != null">product_type = #{productType},</if>
+            <if test="imagingTime != null">imaging_time = #{imagingTime},</if>
+            <if test="produceTime != null">produce_time = #{produceTime},</if>
+            <if test="bands != null">bands = #{bands},</if>
+            <if test="wavelengthNm != null">wavelength_nm = #{wavelengthNm},</if>
+            <if test="fwhmNm != null">fwhm_nm = #{fwhmNm},</if>
+            <if test="gsdMeter != null">gsd_meter = #{gsdMeter},</if>
+            <if test="dataBits != null">data_bits = #{dataBits},</if>
+            <if test="widthPixels != null">width_pixels = #{widthPixels},</if>
+            <if test="heightPixels != null">height_pixels = #{heightPixels},</if>
+            <if test="cloudPercent != null">cloud_percent = #{cloudPercent},</if>
+            <if test="centerLat != null">center_lat = #{centerLat},</if>
+            <if test="centerLon != null">center_lon = #{centerLon},</if>
+            <if test="ulLat != null">ul_lat = #{ulLat},</if>
+            <if test="ulLon != null">ul_lon = #{ulLon},</if>
+            <if test="urLat != null">ur_lat = #{urLat},</if>
+            <if test="urLon != null">ur_lon = #{urLon},</if>
+            <if test="lrLat != null">lr_lat = #{lrLat},</if>
+            <if test="lrLon != null">lr_lon = #{lrLon},</if>
+            <if test="llLat != null">ll_lat = #{llLat},</if>
+            <if test="llLon != null">ll_lon = #{llLon},</if>
+            <if test="solarAzimuth != null">solar_azimuth = #{solarAzimuth},</if>
+            <if test="solarElevation != null">solar_elevation = #{solarElevation},</if>
+            <if test="satelliteAzimuth != null">satellite_azimuth = #{satelliteAzimuth},</if>
+            <if test="satelliteElevation != null">satellite_elevation = #{satelliteElevation},</if>
+            <if test="roll != null">roll = #{roll},</if>
+            <if test="pitch != null">pitch = #{pitch},</if>
+            <if test="yaw != null">yaw = #{yaw},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSatelliteImageById" parameterType="Long">
+        delete from satellite_image where id = #{id}
+    </delete>
+
+    <delete id="deleteSatelliteImageByIds" parameterType="String">
+        delete from satellite_image where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="statByTime" resultType="map">
+        SELECT DATE_FORMAT(imaging_time, '%Y-%m') AS time,
+               COUNT(*) AS count
+        FROM satellite_image
+        GROUP BY DATE_FORMAT(imaging_time, '%Y-%m')
+        ORDER BY time
+    </select>
+
+    <select id="statBySatellite" resultType="map">
+        SELECT satellite AS name,
+               COUNT(*) AS value
+        FROM satellite_image
+        GROUP BY satellite
+    </select>
+
+    <select id="statByCloud" resultType="map">
+        SELECT
+        CASE
+        WHEN cloud_percent &lt; 10 THEN '0-10%'
+        WHEN cloud_percent &lt; 30 THEN '10-30%'
+        WHEN cloud_percent &lt; 60 THEN '30-60%'
+        ELSE '60-100%'
+        END AS cloud_range,
+        COUNT(*) AS count
+        FROM satellite_image
+        GROUP BY cloud_range
+    </select>
+
+    <select id="statByRegion" resultType="map">
+        SELECT sea_area AS area, COUNT(*) AS count
+        FROM (
+                 SELECT
+                     CASE
+                         WHEN center_lat &gt; 36 AND center_lat &lt; 41 AND center_lon &gt; 118 AND center_lon &lt;= 122 THEN '渤海'
+                         WHEN center_lat &gt; 31 AND center_lat &lt; 40 AND center_lon &gt; 119 AND center_lon &lt; 127 THEN '黄海'
+                         WHEN center_lat &gt; 21 AND center_lat &lt;= 33 AND center_lon &gt; 117 AND center_lon &lt;= 131 THEN '东海'
+                         WHEN center_lat &gt; 1 AND center_lat &lt; 24 AND center_lon &gt;= 99 AND center_lon &lt;= 122 THEN '南海'
+                         ELSE '其他'
+                         END AS sea_area
+                 FROM satellite_image
+             ) t
+        GROUP BY sea_area
+    </select>
+</mapper>

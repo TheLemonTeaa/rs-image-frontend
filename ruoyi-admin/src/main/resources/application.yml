@@ -30,6 +30,7 @@ server:
       max: 800
       # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
+    max-http-form-post-size: 2147483647
 
 # 日志配置
 logging:
@@ -57,9 +58,9 @@ spring:
   servlet:
     multipart:
       # 单个文件大小
-      max-file-size: 10MB
+      max-file-size: 2048MB
       # 设置总上传的文件大小
-      max-request-size: 20MB
+      max-request-size: 2048MB
   # 服务模块
   devtools:
     restart:
@@ -134,3 +135,11 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 阿里云配置
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    accessKeyId: LTAI5tS3Kj3iySbzSyVFjVgw
+    accessKeySecret: jBExj5Ejq5Ils1LklbswP4P4nm92US
+    bucketName: lemontea-hmleadnews
